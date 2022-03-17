@@ -1,5 +1,5 @@
 <template>
-  <div class="container_child" :style="{backgroundColor: `rgba(${themeColor.color},.7)`}">
+  <div class="container_child" :style="{backgroundColor: `rgba(${themeColor.color},1)`}">
     <div class="into" ref="into">
       <div class="into_top">
         <div class="into_block"></div>
@@ -9,7 +9,7 @@
         </div>
         <div class="into_block"></div>
       </div>
-      <div class="into_text">⚡Component</div>
+      <div class="into_text" @click="targetComponent">⚡Component</div>
       <div class="into_bottom">
         <div class="into_block"></div>
         <div class="into_bottom_middle">
@@ -19,7 +19,7 @@
         <div class="into_block"></div>
       </div>
     </div>
-    <div class="video_box" v-show="bgiState===true">
+    <div class="video_box" v-show="bgiState===true" ref="videoBox">
       <video src="../assets/【4K大片】这，就是北欧！ - 1.4KNORDIC(Av63722873,P1).mp4" muted loop @loadstart="videoStart($event)"></video>
     </div>
   </div>
@@ -37,9 +37,27 @@ export default {
       e.target.currentTime = 8
       e.target.playbackRate = 3
       e.target.play()
+    },
+    bgiBlurSwitch () {
+      if (this.bgiBlurState) {
+        this.$refs.videoBox.style.filter = 'blur(10px)'
+      } else {
+        this.$refs.videoBox.style.filter = 'blur(0px)'
+      }
+    },
+    targetComponent () {
+      this.$router.push('/homepage/componentSubject')
     }
   },
-  props: ['bgiState', 'themeColor']
+  props: ['bgiState', 'themeColor', 'bgiBlurState'],
+  watch: {
+    bgiBlurState () {
+      this.bgiBlurSwitch()
+    }
+  },
+  mounted () {
+    this.bgiBlurSwitch()
+  }
 }
 </script>
 
@@ -79,7 +97,7 @@ export default {
 .container_child {
   position: relative;
   height: 100vh;
-  min-height: 900px;
+  min-height: 800px;
   .into {
     display: flex;
     flex-direction: column;
@@ -196,6 +214,7 @@ export default {
     left: 50%;
     width: 100%;
     height: 100vh;
+    min-height: 900px;
     transform: translate(-50%,-50%);
     opacity: .2;
     video {

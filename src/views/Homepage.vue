@@ -1,7 +1,7 @@
 <template>
   <div class="container_child">
     <keep-alive>
-      <router-view :bgiState="bgiState" :themeColor="themeColorInput"></router-view>
+      <router-view :bgiState="bgiState" :bgiBlurState="bgiBlurOutput" :themeColor="themeColorOutput"></router-view>
     </keep-alive>
     <div class="nav" @click="navAppear" ref="nav">
       <div></div>
@@ -10,10 +10,17 @@
     </div>
     <div class="nav_val" ref="navVal" style="left: -300px;">
       <div class="nav_head">
-        <div class="nav_bgi">
-          <span>动态背景</span>
-          <div class="bgi_open" v-if="bgiState" @click="bgiState=!bgiState"></div>
-          <div class="bgi_close" v-else @click="bgiState=!bgiState"><div :style="{backgroundColor: `rgba(${themeColorInput.color},.7)`}"></div></div>
+        <div class="nav_bgi_switch">
+          <div class="nav_bgi">
+            <span>动态背景</span>
+            <div class="bgi_open" v-if="bgiState" @click="bgiState=!bgiState"></div>
+            <div class="bgi_close" v-else @click="bgiState=!bgiState"><div :style="{backgroundColor: `rgb(${themeColorOutput.color})`}"></div></div>
+          </div>
+          <div class="nav_bgi_blur">
+            <span>背景模糊</span>
+            <div class="bgi_open" v-if="bgiBlurState" @click="bgiBlurState=!bgiBlurState"></div>
+            <div class="bgi_close" v-else @click="bgiBlurState=!bgiBlurState"><div :style="{backgroundColor: `rgb(${themeColorOutput.color})`}"></div></div>
+          </div>
         </div>
         <div class="navLogo" @click="navDisappear">
           <div></div>
@@ -23,6 +30,9 @@
       </div>
       <div class="nav_theme">
         <span>theme</span>
+        <div class="nav_theme_box">
+          <div v-for="val in themeColor" :key="val.id" :style="{backgroundColor: `rgba(${val.color},.7`,borderWidth:selectBorder(val.state) }" @click="selectTheme(val.id)"></div>
+        </div>
       </div>
     </div>
     <audio src="https://music.163.com/song/media/outer/url?id=557812549.mp3" ref="audioPlay" autoplay loop></audio>
@@ -48,8 +58,23 @@ export default {
       musicState: false,
       tipsState: 0,
       bgiState: true,
+      bgiBlurState: true,
       themeColor: [
-        { id: 1, color: '10,144,100', state: true }
+        { id: 1, color: '10,100,100', state: false },
+        { id: 2, color: '0,0,0', state: false },
+        { id: 3, color: '5,22,100', state: false },
+        { id: 4, color: '20,50,70', state: false },
+        { id: 5, color: '100,78,100', state: false },
+        { id: 6, color: '50,78,100', state: false },
+        { id: 7, color: '20,21,50', state: false },
+        { id: 8, color: '40,82,100', state: false },
+        { id: 9, color: '90,81,130', state: false },
+        { id: 10, color: '87,30,20', state: false },
+        { id: 11, color: '0,20,20', state: true },
+        { id: 12, color: '180,80,50', state: false },
+        { id: 13, color: '90,74,70', state: false },
+        { id: 14, color: '40,80,50', state: false },
+        { id: 15, color: '80,120,100', state: false }
       ]
     }
   },
@@ -95,13 +120,32 @@ export default {
           clearInterval(obj.timer)
         }
       }, 20)
+    },
+    selectBorder (val) {
+      if (val) {
+        return '6px'
+      } else {
+        return '2px'
+      }
+    },
+    selectTheme (inputId) {
+      this.themeColor.forEach((val) => {
+        if (val.id === inputId) {
+          val.state = true
+        } else {
+          val.state = false
+        }
+      })
     }
   },
   computed: {
-    themeColorInput () {
+    themeColorOutput () {
       return this.themeColor.find((val) => {
         return val.state
       })
+    },
+    bgiBlurOutput () {
+      return this.bgiBlurState
     }
   },
   mounted () {
@@ -149,14 +193,15 @@ export default {
     position: fixed;
     top: 0;
     width: 300px;
-    background-color: rgba(246, 246, 246, 0.6);
     z-index: 2;
-    box-shadow:2px 2px 10px rgb(117, 117, 117) inset;
-    padding: 20px;
+    box-shadow: 2px 2px 10px rgb(117, 117, 117) inset;
     .nav_head {
       display: flex;
       justify-content: space-between;
-      height: 70px;
+      height: 90px;
+      padding: 20px;
+      padding-bottom: 40px;
+      background-color: rgba(246, 246, 246, .7);
       .navLogo {
         display: flex;
         flex-direction: column;
@@ -173,7 +218,7 @@ export default {
           background-color: white;
         }
       }
-      .nav_bgi {
+      .nav_bgi,.nav_bgi_blur {
         display: flex;
         margin-top: 5px;
         span {
@@ -184,7 +229,7 @@ export default {
         }
         .bgi_open,.bgi_close {
           width: 35px;
-          height: 20px;
+          height: 18px;
           border-radius: 10px;
           padding: 2px;
           background-color: white;
@@ -193,34 +238,53 @@ export default {
         .bgi_open::after {
           content: "";
           float: right;
-          height: 16px;
-          width: 16px;
+          height: 14px;
+          width: 14px;
           border-radius: 10px;
           background-color: rgb(255, 200, 61);
         }
         .bgi_close {
           div {
             float: left;
-            height: 16px;
-            width: 16px;
+            height: 14px;
+            width: 14px;
             border-radius: 10px;
+            opacity: .4;
           }
         }
       }
+      .nav_bgi_blur {
+        margin-top:5px;
+      }
     }
     .nav_theme {
-      margin-top: 20px;
+      padding:10px 20px 20px 20px;
+      background-color: rgba(246, 246, 246, 1);
       span {
+        display: block;
         font-weight: 700;
         user-select: none;
         font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .nav_theme_box {
+        display: flex;
+        flex-wrap: wrap;
+        div {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          margin:0 6px 5px;
+          border: 4px solid white;
+          cursor: pointer;
+        }
       }
     }
   }
   .music_message {
     position:fixed;
     top: 20px;
-    right: 170px;
+    right: 10%;
     display: flex;
     align-items: center;
     .music_control {
@@ -280,7 +344,7 @@ export default {
     .tips_one {
       position: fixed;
       top: 70px;
-      right: 315px;
+      right: 17.5%;
       height: 50px;
       padding: 0 15px;
       background-color: #fff;
