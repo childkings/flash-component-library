@@ -20,6 +20,7 @@ const routes = [
       {
         path: 'componentSubject',
         component: ComponentSubject,
+        redirect: '/homepage/componentSubject/button',
         children: [
           { path: 'button', component: Button },
           { path: 'banner', component: Banner },
