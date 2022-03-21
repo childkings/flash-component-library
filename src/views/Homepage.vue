@@ -30,12 +30,10 @@
       </div>
       <div class="nav_theme">
         <span>theme</span>
-        <div class="nav_theme_box">
-          <div v-for="val in themeColor" :key="val.id" :style="{backgroundColor: `rgba(${val.color},.7`,borderWidth:selectBorder(val.state) }" @click="selectTheme(val.id)"></div>
-        </div>
+        <component :is="themeState" :themeColor="themeColor" @selectTheme="newSelectTheme" @themeAdd="newThemeAdd"></component>
       </div>
     </div>
-    <audio src="https://music.163.com/song/media/outer/url?id=557812549.mp3" ref="audioPlay" autoplay loop></audio>
+    <audio src="https://music.163.com/song/media/outer/url?id=557812549.mp3" ref="audioPlay" loop></audio>
     <div class="music_message">
       <div class="music_control">
         <span class="glyphicon glyphicon-pause" v-if="musicState" @click="musicSwitch"></span>
@@ -52,6 +50,7 @@
 </template>
 
 <script>
+import theme from '@/components/Theme.vue'
 export default {
   data () {
     return {
@@ -59,6 +58,7 @@ export default {
       tipsState: 0,
       bgiState: true,
       bgiBlurState: true,
+      themeState: theme,
       themeColor: [
         { id: 1, color: '10,100,100', state: false },
         { id: 2, color: '0,0,0', state: false },
@@ -121,14 +121,7 @@ export default {
         }
       }, 20)
     },
-    selectBorder (val) {
-      if (val) {
-        return '6px'
-      } else {
-        return '2px'
-      }
-    },
-    selectTheme (inputId) {
+    newSelectTheme (inputId) {
       this.themeColor.forEach((val) => {
         if (val.id === inputId) {
           val.state = true
@@ -136,6 +129,16 @@ export default {
           val.state = false
         }
       })
+    },
+    newThemeAdd (inputTheme) {
+      const temp = { id: this.themeColor.length + 1, color: inputTheme, state: true }
+      this.themeColor.some((val) => {
+        if (val.state === true) {
+          val.state = false
+          return false
+        }
+      })
+      this.themeColor.push(temp)
     }
   },
   computed: {
@@ -266,18 +269,6 @@ export default {
         user-select: none;
         font-size: 18px;
         margin-bottom: 10px;
-      }
-      .nav_theme_box {
-        display: flex;
-        flex-wrap: wrap;
-        div {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          margin:0 6px 5px;
-          border: 4px solid white;
-          cursor: pointer;
-        }
       }
     }
   }
