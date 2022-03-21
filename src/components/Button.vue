@@ -1,6 +1,6 @@
 <template>
   <div class="container_child">
-    <div class="introduce"><span>简介：</span>借由theme的切换来快速获取自定义的组件，实现快速开发</div>
+    <div class="introduce"><span>简介：</span>借由theme的切换来快速获取自定义的Button组件，实现快速开发</div>
     <h1 :style="{color: `rgba(${themeColor.color})`}">Button
       <hr>
     </h1>
@@ -14,6 +14,12 @@
         动态按钮
       </button>
     </div>
+    <h3 v-show="componentsSwitch==='ButtonOne'">简约按钮
+    </h3>
+    <h3 v-show="componentsSwitch==='ButtonTwo'">圆角按钮
+    </h3>
+    <h3 v-show="componentsSwitch==='ButtonThree'">动态按钮
+    </h3>
     <div class="button_text">
       <component :is="componentsSwitch" :themeColor="themeColor"></component>
     </div>
@@ -27,7 +33,7 @@ import ButtonThree from '@/components/ButtonThree.vue'
 export default {
   data () {
     return {
-      componentsSwitch: 'ButtonOne',
+      componentsSwitch: 'ButtonThree',
       timer: null,
       showDistance: null
     }
@@ -86,6 +92,10 @@ export default {
       background-color: black;
     }
   }
+  h3 {
+    padding: 30px 50px 0 50px;
+    user-select: none;
+  }
   .button_browse {
     display: inline-block;
     margin: 0 50px;
@@ -104,8 +114,7 @@ export default {
     }
   }
   .button_text {
-    padding: 0 50px;
-    padding-top: 40px;
+    padding:40px 0 50px 50px;
   }
 }
 </style>

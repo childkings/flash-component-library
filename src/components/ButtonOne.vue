@@ -1,13 +1,17 @@
 <template>
- <div class="container_child">
+ <div class="container_child" style="width: 100%">
       <div>HTML
         <hr>
       </div>
       <div :style="{backgroundColor: `rgba(${themeColor.color},.2)`}" ref="buttonTextHTML"></div>
-      <div>CSS
-        <hr>
+      <div style="width: 100%">CSS
+        <hr style="width: 100%">
       </div>
       <div :style="{backgroundColor: `rgba(${themeColor.color},.2)`}" ref="buttonTextCSS"></div>
+      <div>JS
+        <hr>
+      </div>
+      <div :style="{backgroundColor: `rgba(${themeColor.color},.2)`}" ref="buttonTextJS"></div>
  </div>
 </template>
 
@@ -31,22 +35,24 @@ export default {
 </script>
 
 <style lang="less" scoped>
-div:first-child,div:nth-child(3) {
-  font-size: 20px;
-  user-select: none;
-  hr {
-    display: block;
-    height: 1px;
-    margin-top: 5px;
-    background-color: black;
+.container_child {
+  div:nth-child(odd) {
+    font-size: 20px;
+    user-select: none;
+    hr {
+      display: block;
+      height: 1px;
+      margin-top: 5px;
+      background-color: black;
+    }
   }
-}
-div:nth-child(2),div:nth-child(4) {
-  display: inline-block;
-  border: 2px solid rgb(193, 193, 193);
-  padding: 5px 20px 5px 5px;
-  margin-bottom: 20px;
-  user-select:text;
-  font-size: 15px;
+  div:nth-child(even) {
+    display: inline-block;
+    border: 2px solid rgb(193, 193, 193);
+    padding: 5px 20px 5px 5px;
+    margin-bottom: 20px;
+    user-select:text;
+    font-size: 15px;
+  }
 }
 </style>

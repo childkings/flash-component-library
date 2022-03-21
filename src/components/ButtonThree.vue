@@ -1,11 +1,11 @@
 <template>
- <div class="container_child">
+ <div class="container_child" style="width: 100%">
       <div>HTML
         <hr>
       </div>
       <div :style="{backgroundColor: `rgba(${themeColor.color},.2)`}" ref="buttonTextHTML"></div>
-      <div>CSS
-        <hr>
+      <div style="width: 100%">CSS
+        <hr style="width: 100%">
       </div>
       <div :style="{backgroundColor: `rgba(${themeColor.color},.2)`}" ref="buttonTextCSS"></div>
       <div>JS

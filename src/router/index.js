@@ -5,7 +5,9 @@ import HomeOne from '@/components/HomeOne.vue'
 import ComponentSubject from '@/components/ComponentSubject.vue'
 import Banner from '@/components/Banner.vue'
 import Button from '@/components/Button.vue'
-import Test from '@/components/Test.vue'
+import TestBefore from '@/components/TestBefore.vue'
+import TestAfter from '@/components/TestAfter.vue'
+import Input from '@/components/Input.vue'
 
 Vue.use(VueRouter)
 
@@ -24,7 +26,9 @@ const routes = [
         children: [
           { path: 'button', component: Button },
           { path: 'banner', component: Banner },
-          { path: 'test', component: Test }
+          { path: 'input', component: Input },
+          { path: 'testBefore', component: TestBefore },
+          { path: 'testAfter', component: TestAfter }
         ]
       }
     ]

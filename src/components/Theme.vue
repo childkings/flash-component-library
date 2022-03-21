@@ -5,10 +5,10 @@
     </div>
     <div class="add_model">
       <div class="input_box">
-        <input type="text" @change="fromTest($event)" value="0"><span>,</span><input type="text" @change="fromTest($event)" value="0"><span>,</span><input type="text" @change="fromTest($event)" value="0">
+        <input type="text" class="inputVal" @change="fromTest($event)" value="0"><span>,</span><input type="text" class="inputVal" @change="fromTest($event)" value="0"><span>,</span><input type="text" class="inputVal" @change="fromTest($event)" value="0">
       </div>
       <div class="theme_add" @click="themeAdd()">add</div>
-      <div class="browse" ref="browse" style="backgroundColor: white"></div>
+      <div class="browse" ref="browse" style="backgroundColor: white" @mouseover="enlarge($event)" @mouseout="narrow($event)"></div>
     </div>
   </div>
 </template>
@@ -38,11 +38,11 @@ export default {
     },
     showThemeChange () {
       let temp = ''
-      for (let i = 0; i < document.querySelectorAll('input').length; i++) {
-        if (i === document.querySelectorAll('input').length - 1) {
-          temp += document.querySelectorAll('input')[i].value
+      for (let i = 0; i < document.querySelectorAll('.inputVal').length; i++) {
+        if (i === document.querySelectorAll('.inputVal').length - 1) {
+          temp += document.querySelectorAll('.inputVal')[i].value
         } else {
-          temp += document.querySelectorAll('input')[i].value + ','
+          temp += document.querySelectorAll('.inputVal')[i].value + ','
         }
       }
       this.showRGB = temp
@@ -65,6 +65,12 @@ export default {
     },
     showBrowseBgc () {
       this.$refs.browse.style.backgroundColor = `rgba(${this.showRGB},.7)`
+    },
+    enlarge (e) {
+      e.target.style.transform = 'scale(1.5)'
+    },
+    narrow (e) {
+      e.target.style.transform = 'scale(1)'
     }
   },
   watch: {
@@ -95,7 +101,7 @@ export default {
   .add_model {
     display: flex;
     justify-content: right;
-    align-items: center;
+    align-items: flex-end;
     margin: 5px 6px 0 0;
     .theme_add {
       display: flex;
@@ -104,7 +110,7 @@ export default {
       width: 40px;
       height: 24px;
       padding: 2px 0;
-      margin:0 5px 0 0;
+      margin:0 10px 0 0;
       background-color: rgb(255, 200, 61);
       color: white;
       font-size: 12px;
@@ -127,7 +133,7 @@ export default {
     .browse {
       height: 30px;
       width: 30px;
-      border: 4px solid rgb(255, 200, 61);
+      border: 2px solid rgb(255, 200, 61);
     }
   }
 }

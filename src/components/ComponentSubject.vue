@@ -26,7 +26,8 @@ export default {
           id: 1,
           name: '常规组件',
           children: [
-            { id: 1, name: 'button', state: true, src: '/homepage/componentSubject/button' }
+            { id: 1, name: 'button', state: true, src: '/homepage/componentSubject/button' },
+            { id: 2, name: 'input', state: false, src: '/homepage/componentSubject/input' }
           ],
           state: true
         },
@@ -40,39 +41,17 @@ export default {
         },
         {
           id: 3,
-          name: '测试模块',
+          name: '测试一类模块',
           children: [
-            { id: 1, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 2, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 3, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 4, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 5, name: 'test', state: false, src: '/homepage/componentSubject/test' }
+            { id: 1, name: 'test', state: false, src: '/homepage/componentSubject/testBefore' }
           ],
           state: true
         },
         {
           id: 4,
-          name: '测试模块',
+          name: '测试二类模块',
           children: [
-            { id: 1, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 2, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 3, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 4, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 5, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 6, name: 'test', state: false, src: '/homepage/componentSubject/test' }
-          ],
-          state: true
-        },
-        {
-          id: 5,
-          name: '测试模块',
-          children: [
-            { id: 1, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 2, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 3, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 4, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 5, name: 'test', state: false, src: '/homepage/componentSubject/test' },
-            { id: 6, name: 'test', state: false, src: '/homepage/componentSubject/test' }
+            { id: 1, name: 'test', state: false, src: '/homepage/componentSubject/testAfter' }
           ],
           state: true
         }
